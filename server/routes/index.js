@@ -12,9 +12,35 @@ module.exports = function (app, passport) {
 		}
 	}
 
+	// app.route('/')
+	// 	.get((req, res) => {			
+	// 		res.sendFile(path + '/app/index.html');
+	// 	});
+
 	app.route('/')
 		.get((req, res) => {
-			res.sendFile(path + '/app/index.html');
+			const html = `
+			<!DOCTYPE html>
+			<html lang="en">
+			<head>
+    			<title>reBooks</title>
+    			<meta charset="UTF-8">	
+    			<meta name="viewport" content="width=device-width, initial-scale=1.0">	             
+			</head>
+			<body>
+    			<div id="app"></div>
+				<script type="text/javascript" charset="utf-8">
+					window.USER = ${JSON.stringify(req.user)};
+					console.log(window.USER);
+				</script>
+    			<script type="text/javascript" src="/app/index.js" charset="utf-8"></script>
+			</body>
+			</html>
+			`
+			res
+          	.set('Content-Type', 'text/html')
+          	.status(200)
+          	.end(html);
 		});
 
 	app.route('/logout')
