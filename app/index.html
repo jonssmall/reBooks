@@ -1,26 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>reVote</title>
+    <title>reBooks</title>
     <meta charset="UTF-8">	
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">	
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.teal-indigo.min.css">
-    <link rel="stylesheet" href="/app/style.css">
-    <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">	             
 </head>
-<body onload="setIntervalSyncMDL()">
-    <div id="app"></div>
-    <script>
-        //Upgrades dynamically generated elements to MDL.
-        //Alternative would be including MDL upgrade function in React callbacks - not that easy.
-        function setIntervalSyncMDL() {
-            setInterval("syncMDL();", 1);
-        }
-        function syncMDL() {        
-            componentHandler.upgradeDom();
-        }
-    </script>
+<body>
+    <div id="app"></div>    
     <script type="text/javascript" src="/app/index.js" charset="utf-8"></script>
 </html>

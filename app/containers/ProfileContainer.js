@@ -1,13 +1,11 @@
 var React = require('react');
 var Profile = require('../components/Profile');
 var auth = require('../helpers/authHelpers');
-var api = require('../helpers/pollHelpers');
 
 var ProfileContainer = React.createClass({
     getInitialState: function() {
         return {
-            user: undefined,
-            polls: undefined
+            user: undefined,            
         }
     },    
     componentDidMount: function() {   
@@ -16,26 +14,18 @@ var ProfileContainer = React.createClass({
                 if(result.data) {
                     let user = result.data.github
                     this.setState({
-                        user: user,
-                        polls: result.data.polls
+                        user: user,                        
                     });                    
                 }
             });
     },
     handleDelete: function(id, e) {
-        if(confirm("Are you sure you want to delete this poll?")) {
-            api.deletePoll(id)
-            .then(result => {
-                this.setState({
-                    polls: result.data
-                });    
-            });
-        }              
+                 
     },
     render: function () {        
         return (
             <div>
-                <Profile user={this.state.user} polls={this.state.polls} delete={this.handleDelete} />
+                <Profile user={this.state.user} delete={this.handleDelete} />
             </div>
         )
     }

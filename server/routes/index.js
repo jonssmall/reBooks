@@ -1,7 +1,6 @@
 'use strict';
 
 let path = process.cwd();
-let pollAccess = require('../controllers/pollAccess')
 
 module.exports = function (app, passport) {
 
@@ -18,21 +17,11 @@ module.exports = function (app, passport) {
 			res.sendFile(path + '/app/index.html');
 		});
 
-	app.route('/login')
-		.get(function (req, res) {
-			// res.sendFile(path + '/public/login.html');
-		});
-
 	app.route('/logout')
 		.get(function (req, res) {
 			req.logout();
 			res.redirect('/');
-		});
-
-    app.route('/signedOn')
-        .get(function(req, res) {
-            res.send(req.isAuthenticated());
-        })
+		});    
 
 	app.route('/profile')
 		.get(isLoggedIn, function (req, res) {
@@ -55,23 +44,5 @@ module.exports = function (app, passport) {
                 successRedirect: redirect,
                 failureRedirect: redirect //how to handle failure
             })(req, res);
-        });
-    
-    app.route('/api/polls/')
-        .get(pollAccess.getPolls)
-        .post(isLoggedIn, pollAccess.addPoll);
-
-    app.route('/api/polls/:id')
-        .get(pollAccess.getPoll)
-        .delete(pollAccess.deletePoll);   
-
-    app.route('/api/polls/:pollId/options/:optionId')
-        .get(pollAccess.incrementVote);   
-
-    app.route('/api/polls/:pollId/options/new/:optionText')
-        .get(pollAccess.submitNewOption);   
-
-    app.route('/api/polls/:pollId/didVote')
-        .get(pollAccess.didVote);   
-
+        });    
 };

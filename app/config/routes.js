@@ -8,28 +8,20 @@ var auth = require('../helpers/authHelpers');
 var Main = require('../containers/Main');
 var HomeContainer = require('../containers/HomeContainer');
 var ProfileContainer = require('../containers/ProfileContainer');
-var PollsContainer = require('../containers/PollsContainer');
-var PollContainer = require('../containers/PollContainer');
-var NewPollContainer = require('../containers/NewPollContainer');
 
 
-function requireAuth (nextState, replace, callback) {
-    auth.isSignedOn()
-        .then(result => {            
-            if(!result.data) {
-                console.log('not logged in');
-                var snackbarContainer = document.querySelector('#unauth-snackbar');
-                var data = {message: 'Unauthorized - Please Login'};
-                snackbarContainer.MaterialSnackbar.showSnackbar(data);
-                console.log(nextState);
-                replace({
-                    pathname: '/',
-                    //HOW TO GO BACK TO PREVIOUS VIEW ???
-                    state: { nextPathname: nextState.location.pathname }
-                });                
-            }
-            callback();
-        });
+function requireAuth (nextState, replace, callback) {    
+    if(!window.USER) {
+        console.log('not logged in');        
+        var data = {message: 'Unauthorized - Please Login'};        
+        console.log(nextState);
+        replace({
+            pathname: '/',
+            //HOW TO GO BACK TO PREVIOUS VIEW ???
+            state: { nextPathname: nextState.location.pathname }
+        });                
+    }
+    callback();        
 }
 
 function reroute(nextState, replace, callback) {
@@ -45,10 +37,10 @@ var routes = (
     <Route path='/' component={Main}>        
       <IndexRoute component={HomeContainer} onEnter={reroute} />
       <Route path='profile' component={ProfileContainer} onEnter={requireAuth}/>
-      <Route path='polls' component={PollsContainer}>
+      {/*<Route path='polls' component={PollsContainer}>
         <Route path='new' component={NewPollContainer} onEnter={requireAuth} />
         <Route path=':id' component={PollContainer} />        
-      </Route>
+      </Route>*/}
     </Route>
   </Router>
 );

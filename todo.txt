@@ -1,2 +1,0 @@
-4. Style using MD cards
-5. Form validation

@@ -1,14 +1,5 @@
 let axios = require('axios');
 
-function isSignedOn () {
-    return axios.get('/signedOn')
-        .then(response => {
-            return response
-        }).catch(error => {
-            console.log(error);
-        });    
-}
-
 function getUser () {    
     return axios.get('/profile')
         .then(response => {
@@ -18,7 +9,6 @@ function getUser () {
         });
 }
 
-module.exports = {
-    isSignedOn: isSignedOn,
+module.exports = {    
     getUser: getUser
 };
