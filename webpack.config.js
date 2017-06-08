@@ -18,5 +18,18 @@ module.exports = {
             {test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"}
         ]
     },
+    // module: {
+    //     rules: [{
+    //         test: /\.js$/,
+    //         loader: 'babel-loader',
+    //         query: {
+    //             presets: [
+    //                 'es2015',
+    //                 'react'
+    //             ],
+    //             plugins: []
+    //         }
+    //     }]        
+    // }                    
     //plugins: [HtmlWebpackPluginConfig]
 }
