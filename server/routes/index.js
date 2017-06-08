@@ -37,12 +37,12 @@ module.exports = function (app, passport) {
         });                    
 
     app.route('/auth/github/callback')
-		.get(function(req, res) {            
+		.get(function(req, res, next) {            
             const redirect = app.locals.target ? '/#/' + app.locals.target : '/' 
             app.locals.target = null;
             passport.authenticate('github', {
                 successRedirect: redirect,
                 failureRedirect: redirect //how to handle failure
-            })(req, res);
+            })(req, res, next);
         });    
 };
