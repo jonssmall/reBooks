@@ -15,7 +15,7 @@ function addBook (req, res) {
 };
 
 function getBooks (req, res) {        
-    Books.find({}, function(err, books) {
+    Books.find({}, (err, books) => {
         if (err) throw err;        
         res.json(books);
     });
@@ -23,7 +23,7 @@ function getBooks (req, res) {
 
 function getBook (req, res) {
     if(req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
-        Books.findOne({_id: req.params.id}, function (err, book) {
+        Books.findOne({_id: req.params.id}, (err, book) => {
             if (err) throw err;                    
             res.json(book);
         });
@@ -33,6 +33,8 @@ function getBook (req, res) {
 };
 
 function deleteBook (req, res) {
+    //todo: ensure deleting requests for book.
+    //todo: active trade can't delete book
     if(req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
         Books.findOne({_id: req.params.id}).remove(res => {
           res.status(200).send('Deleted book.');

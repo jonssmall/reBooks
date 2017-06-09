@@ -1,8 +1,8 @@
-var React = require('react');
-var Link = require('react-router').Link;
+const React = require('react');
+const Link = require('react-router').Link;
 
 function Profile (props) {    
-    var output = null;
+    let output = null;
     if(props.user) {        
         output = (
             <div>                

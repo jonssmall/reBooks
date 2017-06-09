@@ -1,14 +1,14 @@
 'use strict';
 
-var express = require('express');
-var routes = require('./server/routes/index.js');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-var passport = require('passport');
-var session = require('express-session');
+const express = require('express');
+const routes = require('./server/routes/index.js');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const session = require('express-session');
 
-var app = express();
-var router = express.Router({mergeParams: true});
+const app = express();
+const router = express.Router({mergeParams: true});
 require('dotenv').load();
 require('./server/config/passport')(passport);
 
@@ -33,6 +33,6 @@ app.set('trust proxy', true);
 routes(app, passport);
 
 var port = process.env.PORT || 8080;
-app.listen(port,  function () {
+app.listen(port, () => {
 	console.log('Node.js listening on port ' + port + '...');
 });
