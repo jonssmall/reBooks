@@ -9,7 +9,12 @@ var User = new Schema({
 		displayName: String,
 		username: String,
         publicRepos: Number
-	}
+	},
+	name: String,
+	City: String,
+	State: String,
+	books : [{ type: Schema.Types.ObjectId, ref: 'Book' }],
+	requests : [{ type: Schema.Types.ObjectId, ref: 'Request' }]
 });
 
 module.exports = mongoose.model('User', User);

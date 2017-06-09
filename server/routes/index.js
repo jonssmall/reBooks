@@ -4,19 +4,6 @@ let path = process.cwd();
 
 module.exports = function (app, passport) {
 
-	function isLoggedIn (req, res, next) {
-		if (req.isAuthenticated()) {
-			return next();
-		} else {
-			res.redirect('/login');
-		}
-	}
-
-	// app.route('/')
-	// 	.get((req, res) => {			
-	// 		res.sendFile(path + '/app/index.html');
-	// 	});
-
 	app.route('/')
 		.get((req, res) => {
 			const html = `
@@ -48,11 +35,6 @@ module.exports = function (app, passport) {
 			req.logout();
 			res.redirect('/');
 		});    
-
-	app.route('/profile')
-		.get(isLoggedIn, function (req, res) {
-			res.json(req.user);
-		});	
         
 	app.route('/auth/github')
 		.get(function(req, res) {
