@@ -4,10 +4,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Request = new Schema({  
-  FirstBook: { type: Schema.Types.ObjectId, ref: 'Book' },
-  SecondBook: { type: Schema.Types.ObjectId, ref: 'Book' },
-  Approved: Boolean,
-  Completed: Boolean  
+  firstBook: { type: Schema.Types.ObjectId, ref: 'Book' },
+  secondBook: { type: Schema.Types.ObjectId, ref: 'Book' },
+  approved: Boolean,
+  completed: Boolean  
 });
 
 module.exports = mongoose.model('Request', Request);

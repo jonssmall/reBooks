@@ -7,4 +7,4 @@ var HomeContainer = React.createClass({
     },
 });
 
-module.exports = HomeContainer;
+export default HomeContainer

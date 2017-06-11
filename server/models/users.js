@@ -11,8 +11,8 @@ const User = new Schema({
         publicRepos: Number
 	},
 	name: String,
-	City: String,
-	State: String,
+	city: String,
+	state: String,
 	books : [{ type: Schema.Types.ObjectId, ref: 'Book' }],
 	requests : [{ type: Schema.Types.ObjectId, ref: 'Request' }]
 });

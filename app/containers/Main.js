@@ -1,6 +1,5 @@
 var React = require('react');
 var Link = require('react-router').Link;
-var auth = require('../helpers/authHelpers');
 
 function Login (props) {            
     const Login = <a href={`/auth/github?target=${props.path.substring(1)}`}>Login</a>;        

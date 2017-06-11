@@ -1,6 +1,8 @@
+'use strict';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Routes from './config/routes2';
+import Routes from './config/routes';
 
 ReactDOM.render(
   <Routes />,
