@@ -1,7 +1,7 @@
 'use strict';
 
 const express = require('express');
-const routes = require('./server/routes/index.js');
+const routes = require('./routes/index.js');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
@@ -10,7 +10,7 @@ const session = require('express-session');
 const app = express();
 const router = express.Router({mergeParams: true});
 require('dotenv').load();
-require('./server/config/passport')(passport);
+require('./config/passport')(passport);
 
 mongoose.connect(process.env.MONGO_URI);
 mongoose.Promise = global.Promise;
