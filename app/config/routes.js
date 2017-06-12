@@ -54,7 +54,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       }}/>
     )
   )}/>
-)
+);
 
 class Login extends React.Component {
   render() {
@@ -67,6 +67,6 @@ class Login extends React.Component {
       </div>
     )
   }
-}
+};
 
-export default AuthExample
+export default AuthExample;

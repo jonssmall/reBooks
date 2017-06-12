@@ -1,7 +1,17 @@
 'use strict';
 
+const userApi = require('../controllers/userAccess');
 const path = process.cwd();
+
 module.exports = (app, passport) => {
+
+	function isLoggedIn (req, res, next) {
+		if (req.isAuthenticated()) {
+			return next();
+		} else {
+			res.status('401').send('Unauthorized');
+		}
+	}
 
 	app.route('/')
 		.get((req, res) => {
@@ -46,8 +56,6 @@ module.exports = (app, passport) => {
 		});
 
 	app.route('/user')
-		.put((req, res) => {
-			console.log(req.body);
-		});
-		
+		.put(isLoggedIn, userApi.updateLocation);
+
 };

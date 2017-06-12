@@ -1,5 +1,6 @@
-const React = require('react');
-const Link = require('react-router').Link;
+'use strict';
+
+import React from 'react';
 
 function Profile(props) {
   const output = (
@@ -23,6 +24,6 @@ function Profile(props) {
     </div>
   );
   return output;
-}
+};
 
-module.exports = Profile;
+export default Profile

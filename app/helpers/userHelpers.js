@@ -1,15 +1,17 @@
-const axios = require('axios');
+'use strict';
+
+import axios from 'axios';
 
 function updateUser(user) {
     //PUT to user api to change Name, City, State
     axios.put('/user', {
       user: user
     })
-    .then(function (response) {
-      console.log(response);
+    .then(res => {
+      console.log(res);
     })
-    .catch(function (error) {
-      console.log(error);
+    .catch(err => {
+      console.log(err);
     });
 }
 
