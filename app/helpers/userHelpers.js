@@ -1,18 +1,16 @@
 const axios = require('axios');
 
-// function getUser () {    
-//     return axios.get('/profile')
-//         .then(response => {
-//             return response
-//         }).catch(error => {
-//             console.log(error);
-//         });
-// }
-
-function updateUser() {
+function updateUser(user) {
     //PUT to user api to change Name, City, State
+    axios.put('/user', {
+      user: user
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 }
 
-module.exports = {    
-    updateUser: updateUser
-};
+export default updateUser

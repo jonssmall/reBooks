@@ -43,6 +43,11 @@ module.exports = (app, passport) => {
 				successRedirect: '/',
 				failureRedirect: '/' //how to handle failure
 			})(req, res, next);
-		});    
+		});
+
+	app.route('/user')
+		.put((req, res) => {
+			console.log(req.body);
+		});
 		
 };
