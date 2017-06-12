@@ -9,7 +9,7 @@ class MyBooksContainer extends React.Component {
     this.state = {
       myBooks: [],
       newBook: {
-        name: '',
+        title: '',
         author: ''
       }
     };
@@ -29,9 +29,12 @@ class MyBooksContainer extends React.Component {
   };
 
   handleSubmit() {
-    console.log(this.state.newBook);
+    bookHelper.addBook(this.state.newBook, this.props.user._id)
+      .then(result => {
+        console.log(result);
+      });    
     const clearBook = {
-      name: '',
+      title: '',
       author: ''
     };
     this.setState({newBook: clearBook});
@@ -52,8 +55,8 @@ function NewBook(props) {
     <div>      
       <h1>New Book:</h1>
       <label>
-        Name:
-        <input type="text" name="name" value={props.newBook.name} onChange={props.onUpdate} />
+        Title:
+        <input type="text" name="title" value={props.newBook.title} onChange={props.onUpdate} />
       </label>
       <label>
         Author:
@@ -69,7 +72,7 @@ function MyBooks(props) {
   props.books.map(b => {
     const book = (
       <div>
-        <em>{b.name}</em> by {b.author}
+        <em>{b.title}</em> by {b.author}
       </div>
     );
     books.push(book);

@@ -23,7 +23,10 @@ class ProfileContainer extends React.Component {
   };
 
   handleSubmit() {    
-    updateUser(this.state.user);
+    updateUser(this.state.user)
+      .then(result => {
+        console.log(result);
+      });
   };
 
   render() {       

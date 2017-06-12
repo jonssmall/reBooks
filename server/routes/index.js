@@ -1,6 +1,7 @@
 'use strict';
 
 const userApi = require('../controllers/userAccess');
+const bookApi = require('../controllers/bookAccess');
 const path = process.cwd();
 
 module.exports = (app, passport) => {
@@ -19,17 +20,16 @@ module.exports = (app, passport) => {
 			<!DOCTYPE html>
 			<html lang="en">
 			<head>
-    			<title>reBooks</title>
-    			<meta charset="UTF-8">	
-    			<meta name="viewport" content="width=device-width, initial-scale=1.0">	             
+    		<title>reBooks</title>
+    		<meta charset="UTF-8">	
+    		<meta name="viewport" content="width=device-width, initial-scale=1.0">	             
 			</head>
 			<body>
-    			<div id="app"></div>
+    		<div id="app"></div>
 				<script type="text/javascript" charset="utf-8">
-					window.USER = ${JSON.stringify(req.user)};
-					console.log(window.USER);
+					window.USER = ${JSON.stringify(req.user)};					
 				</script>
-    			<script type="text/javascript" src="/app/index.js" charset="utf-8"></script>
+    		<script type="text/javascript" src="/app/index.js" charset="utf-8"></script>
 			</body>
 			</html>
 			`;
@@ -57,5 +57,8 @@ module.exports = (app, passport) => {
 
 	app.route('/user')
 		.put(isLoggedIn, userApi.updateLocation);
+
+	app.route('/books')
+		.post(isLoggedIn, bookApi.addBook);
 
 };

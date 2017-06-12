@@ -3,8 +3,17 @@
 import axios from 'axios';
 
 const bookHelper = {
-  addBook(bookObj) {
-    //axios.post a new book
+  addBook(bookObj, userId) {
+    return axios.post('/books', {
+      book: bookObj,
+      userId: userId
+    })
+    .then(res => {
+      return res;
+    })
+    .catch(err => {
+      console.log(err);
+    });
   },
 
   getAllBooks() {

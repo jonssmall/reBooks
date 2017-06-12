@@ -3,10 +3,10 @@
 const Books = require('../models/books.js');
 
 function addBook(req, res) {
-  const newBook = new Books();
-  newBook.title = req.body.title;
-  newBook.author = req.body.author;
-  newBook.author = req.body.userId;
+  const newBook = new Books();  
+  newBook.title = req.body.book.title;
+  newBook.author = req.body.book.author;
+  newBook.owner = req.body.userId;
 
   newBook.save(err => {
     if (err) throw err;

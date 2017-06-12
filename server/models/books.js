@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Book = new Schema({
-  name: String,
+  title: String,
   author: String,
   owner: { type: Schema.Types.ObjectId, ref: 'User' }
 });

@@ -4,11 +4,11 @@ import axios from 'axios';
 
 function updateUser(user) {
     //PUT to user api to change Name, City, State
-    axios.put('/user', {
+    return axios.put('/user', {
       user: user
     })
-    .then(res => {
-      console.log(res);
+    .then(res => {      
+      return res;
     })
     .catch(err => {
       console.log(err);
