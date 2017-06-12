@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Profile from '../components/Profile';
+import MyBooksContainer from './MyBooksContainer';
 import updateUser from '../helpers/userHelpers';
 
 class ProfileContainer extends React.Component {
@@ -18,7 +19,7 @@ class ProfileContainer extends React.Component {
     user[event.target.name] = event.target.value;
     this.setState({
       user,
-    })
+    });
   };
 
   handleSubmit() {    
@@ -29,6 +30,8 @@ class ProfileContainer extends React.Component {
     return (
       <div>
         <Profile user={this.state.user} onUpdate={this.handleUpdate} onSubmit={this.handleSubmit} />
+        <h1>My Books:</h1>
+        <MyBooksContainer user={this.state.user} />
       </div>
     )
   };

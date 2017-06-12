@@ -9,15 +9,15 @@ function Profile(props) {
         <h1>Welcome guy</h1>
         <label>
           Name:
-          <input type="text" name="name" onChange={props.onUpdate} />
+          <input type="text" name="name" value={props.user.name} onChange={props.onUpdate} />
         </label>
         <label>
           City:
-          <input type="text" name="city" onChange={props.onUpdate} />
+          <input type="text" name="city" value={props.user.city} onChange={props.onUpdate} />
         </label>
         <label>
           State:
-          <input type="text" name="state" onChange={props.onUpdate} />
+          <input type="text" name="state" value={props.user.state} onChange={props.onUpdate} />
         </label>
         <button onClick={props.onSubmit}>Update User</button>
       </div>
