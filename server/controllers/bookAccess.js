@@ -42,8 +42,10 @@ function getBook(req, res) {
 function deleteBook(req, res) {
   //todo: ensure deleting requests for book.
   //todo: active trade can't delete book
+  //todo: You can only delete your own books.
   if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
-    Books.findOne({ _id: req.params.id }).remove(res => {
+    Books.findOne({ _id: req.params.id }).remove(err => {
+      if (err) throw err;
       res.status(200).send('Deleted book.');
     });
   } else {

@@ -64,4 +64,7 @@ module.exports = (app, passport) => {
 	app.route('/books')
 		.post(isLoggedIn, bookApi.addBook);
 
+	app.route('/books/:id')
+		.delete(isLoggedIn, bookApi.deleteBook);
+
 };

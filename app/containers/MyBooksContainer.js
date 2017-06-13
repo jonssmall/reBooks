@@ -16,16 +16,18 @@ class MyBooksContainer extends React.Component {
 
     this.handleUpdate = this.handleUpdate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   };
   
   componentDidMount() {    
     bookHelper.getMyBooks()
-      .then(result => {        
+      .then(result => {            
         const books = [];
         result.data.map(b => {
           books.push({ 
             title: b.title,
-            author: b.author
+            author: b.author,
+            id: b._id
           });
         });
         this.setState({ myBooks: books });
@@ -45,9 +47,12 @@ class MyBooksContainer extends React.Component {
           const books = this.state.myBooks;
           books.push({
             title: result.data.title,
-            author: result.data.author
+            author: result.data.author,
+            id: result.data._id
           });
           this.setState({ myBooks: books });
+        } else {
+          console.log(result);
         }
       });    
     const clearBook = {
@@ -57,11 +62,26 @@ class MyBooksContainer extends React.Component {
     this.setState({ newBook: clearBook });
   };
 
+  handleDelete(id) {
+    bookHelper.deleteBook(id)
+      .then(result => {
+        if(result.status == 200) {
+          let books = this.state.myBooks;
+          books = books.filter(b => {
+            return b.id !== id
+          });
+          this.setState({ myBooks: books })
+        } else {
+          console.log(result);
+        }
+      });
+  }
+
   render() {       
     return (
       <div>        
         <NewBook newBook={this.state.newBook} onUpdate={this.handleUpdate} onSubmit={this.handleSubmit} />        
-        <MyBooks books={this.state.myBooks} />
+        <MyBooks books={this.state.myBooks} onDelete={this.handleDelete} />
       </div>
     )
   };
@@ -85,15 +105,14 @@ function NewBook(props) {
 };
 
 function MyBooks(props) {
-  const books = [];
-  let iterator = 1;
+  const books = [];  
   props.books.map(b => {
     const book = (
-      <div key={iterator}>
+      <div key={b.id}>
         <em>{b.title}</em> by {b.author}
+        <button onClick={props.onDelete.bind(this, b.id)}>Delete</button>
       </div>
-    );
-    iterator++;
+    );    
     books.push(book);
   });
   return (    

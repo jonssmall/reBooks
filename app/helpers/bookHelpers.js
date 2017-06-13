@@ -10,8 +10,7 @@ const bookHelper = {
     .then(res => {
       return res;
     })
-    .catch(err => {
-      console.log(err);
+    .catch(err => {      
       return err;
     });
   },
@@ -29,14 +28,19 @@ const bookHelper = {
       .then(res => {
         return res
       })
-      .catch(err => {
-        console.log(err);
+      .catch(err => {        
         return err;
       });
   },
 
-  deleteBook(id) {
-    //axios.delete(/books/:id)
+  deleteBook(id) {    
+    return axios.delete(`/books/${id}`)
+      .then(res => {
+        return res
+      })
+      .catch(err => {        
+        return err;
+      });
   }
 };
 

@@ -10,8 +10,7 @@ function updateUser(user) {
     .then(res => {      
       return res;
     })
-    .catch(err => {
-      console.log(err);
+    .catch(err => {      
       return err;
     });
 }
