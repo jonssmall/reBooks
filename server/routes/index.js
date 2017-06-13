@@ -58,6 +58,9 @@ module.exports = (app, passport) => {
 	app.route('/user')
 		.put(isLoggedIn, userApi.updateLocation);
 
+	app.route('/user/books')
+		.get(isLoggedIn, bookApi.getMyBooks);
+
 	app.route('/books')
 		.post(isLoggedIn, bookApi.addBook);
 

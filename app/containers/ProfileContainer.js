@@ -32,9 +32,8 @@ class ProfileContainer extends React.Component {
   render() {       
     return (
       <div>
-        <Profile user={this.state.user} onUpdate={this.handleUpdate} onSubmit={this.handleSubmit} />
-        <h1>My Books:</h1>
-        <MyBooksContainer user={this.state.user} />
+        <Profile user={this.state.user} onUpdate={this.handleUpdate} onSubmit={this.handleSubmit} />        
+        <MyBooksContainer />
       </div>
     )
   };

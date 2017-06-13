@@ -19,25 +19,42 @@ class MyBooksContainer extends React.Component {
   };
   
   componentDidMount() {    
-    bookHelper.getMyBooks(this.props.user._id);
+    bookHelper.getMyBooks()
+      .then(result => {        
+        const books = [];
+        result.data.map(b => {
+          books.push({ 
+            title: b.title,
+            author: b.author
+          });
+        });
+        this.setState({ myBooks: books });
+      });
   };
   
   handleUpdate(event) {
     const newBook = this.state.newBook;
     newBook[event.target.name] = event.target.value;
-    this.setState({newBook});
+    this.setState({ newBook });
   };
 
   handleSubmit() {
-    bookHelper.addBook(this.state.newBook, this.props.user._id)
-      .then(result => {
-        console.log(result);
+    bookHelper.addBook(this.state.newBook)
+      .then(result => {        
+        if(result.status == 200) { //tighter way to do this? DRY w/ componentDidMount?
+          const books = this.state.myBooks;
+          books.push({
+            title: result.data.title,
+            author: result.data.author
+          });
+          this.setState({ myBooks: books });
+        }
       });    
     const clearBook = {
       title: '',
       author: ''
     };
-    this.setState({newBook: clearBook});
+    this.setState({ newBook: clearBook });
   };
 
   render() {       
@@ -69,12 +86,14 @@ function NewBook(props) {
 
 function MyBooks(props) {
   const books = [];
+  let iterator = 1;
   props.books.map(b => {
     const book = (
-      <div>
+      <div key={iterator}>
         <em>{b.title}</em> by {b.author}
       </div>
     );
+    iterator++;
     books.push(book);
   });
   return (    

@@ -3,16 +3,16 @@
 import axios from 'axios';
 
 const bookHelper = {
-  addBook(bookObj, userId) {
+  addBook(bookObj) {
     return axios.post('/books', {
-      book: bookObj,
-      userId: userId
+      book: bookObj      
     })
     .then(res => {
       return res;
     })
     .catch(err => {
       console.log(err);
+      return err;
     });
   },
 
@@ -24,9 +24,15 @@ const bookHelper = {
     //axios.get(/books/:id)
   },
 
-  getMyBooks(userId) {
-    //axios.get(user/books)
-    console.log(userId);
+  getMyBooks() {    
+    return axios.get('/user/books') //is this restful enough?
+      .then(res => {
+        return res
+      })
+      .catch(err => {
+        console.log(err);
+        return err;
+      });
   },
 
   deleteBook(id) {

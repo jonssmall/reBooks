@@ -6,7 +6,7 @@ function addBook(req, res) {
   const newBook = new Books();  
   newBook.title = req.body.book.title;
   newBook.author = req.body.book.author;
-  newBook.owner = req.body.userId;
+  newBook.owner = req.user._id;
 
   newBook.save(err => {
     if (err) throw err;
@@ -16,6 +16,13 @@ function addBook(req, res) {
 
 function getBooks(req, res) {
   Books.find({}, (err, books) => {
+    if (err) throw err;
+    res.json(books);
+  });
+};
+
+function getMyBooks(req, res) {
+  Books.find({ owner: req.user._id }, (err, books) => {
     if (err) throw err;
     res.json(books);
   });
@@ -47,6 +54,7 @@ function deleteBook(req, res) {
 module.exports = {
   addBook: addBook,
   getBooks: getBooks,
+  getMyBooks: getMyBooks,
   getBook: getBook,
   deleteBook: deleteBook
 };
