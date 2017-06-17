@@ -62,9 +62,12 @@ module.exports = (app, passport) => {
 		.get(isLoggedIn, bookApi.getMyBooks);
 
 	app.route('/books')
+		.get(bookApi.getBooks)
 		.post(isLoggedIn, bookApi.addBook);
-
+	
+	//Is there a way to nest this into the /books route?
 	app.route('/books/:id')
+		.get(bookApi.getBook)
 		.delete(isLoggedIn, bookApi.deleteBook);
 
 };

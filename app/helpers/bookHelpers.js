@@ -15,12 +15,24 @@ const bookHelper = {
     });
   },
 
-  getAllBooks() {
-    //axios.get(/books)
+  getBooks() {    
+    return axios.get('/books')
+      .then(res => {
+        return res
+      })
+      .catch(err => {        
+        return err;
+      });
   },
 
   getBook(id) {
-    //axios.get(/books/:id)
+    return axios.get(`/books/${id}`)
+      .then(res => {
+        return res
+      })
+      .catch(err => {        
+        return err;
+      });
   },
 
   getMyBooks() {    

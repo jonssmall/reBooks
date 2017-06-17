@@ -8,7 +8,8 @@ import {
   Redirect,
   withRouter
 } from 'react-router-dom';
-import Home from '../containers/HomeContainer.js';
+import Books from '../containers/BooksContainer.js';
+import Book from '../containers/BookContainer.js';
 import Profile from '../containers/ProfileContainer.js';
 
 //React-Router 4.0
@@ -18,10 +19,11 @@ const AuthExample = () => (
     <div>
       <AuthButton/>
       <ul>
-        <li><Link to="/public">Public Page</Link></li>
+        <li><Link to="/books">Books Page</Link></li>
         <li><Link to="/profile">Profile Page</Link></li>
       </ul>
-      <Route path="/public" component={Home}/>
+      <Route path="/books" component={Books}/>
+      <Route path="/books/:id" component={Book}/>
       <Route path="/login" component={Login}/>
       <PrivateRoute path="/profile" component={Profile}/>
     </div>
