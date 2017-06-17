@@ -1,6 +1,6 @@
 'use strict';
 
-const Users = require('../models/users.js');
+const Users = require('../models/users');
 
 function updateLocation (req, res) {  
   const updateObj = {
@@ -18,4 +18,4 @@ function updateLocation (req, res) {
 
 module.exports = {
   updateLocation: updateLocation
-}
+};

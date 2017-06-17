@@ -4,7 +4,7 @@ import React from 'react';
 import bookHelper from '../helpers/bookHelpers';
 
 class BookContainer extends React.Component {
-  constructor(props) {    
+  constructor(props) {
     super(props);
     this.state = {
       book: {
@@ -15,7 +15,7 @@ class BookContainer extends React.Component {
 
   getBook(id) {
     bookHelper.getBook(id)
-      .then(result => {            
+      .then(result => {
         const book = {
           id: result.data._id,
           title: result.data.title,
@@ -25,18 +25,18 @@ class BookContainer extends React.Component {
       });
   };
 
-  componentDidMount() {    
+  componentDidMount() {
     this.getBook(this.state.book.id);
   };
   
   //Reloading component after one lateral move from one book to the other. Is there another way?
-  componentWillReceiveProps(newProps) {        
+  componentWillReceiveProps(newProps) {
     this.getBook(newProps.match.params.id);
   };
   
   render() {
     //if successful call <book> else "book not found"    
-    return (      
+    return (
       <Book book={this.state.book} />
     )
   };

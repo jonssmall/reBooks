@@ -1,6 +1,6 @@
 'use strict';
 
-const Books = require('../models/books.js');
+const Books = require('../models/books');
 
 function addBook(req, res) {
   const newBook = new Books();  
@@ -30,10 +30,20 @@ function getMyBooks(req, res) {
 
 function getBook(req, res) {
   if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
-    Books.findOne({ _id: req.params.id }, (err, book) => {
-      if (err) throw err;
-      res.json(book);
-    });
+    Books
+      .findOne({ _id: req.params.id })
+      .populate({
+        path: 'owner', 
+        model: 'User',
+        populate: {
+          path: 'request',
+          model: 'Request'
+        }
+      })
+      .exec((err, book) => {
+        if (err) throw err;
+        res.json(book);
+      });    
   } else {
     res.status(404).send('Invalid Book ID');
   }

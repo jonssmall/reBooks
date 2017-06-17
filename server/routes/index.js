@@ -2,6 +2,7 @@
 
 const userApi = require('../controllers/userAccess');
 const bookApi = require('../controllers/bookAccess');
+const requestApi = require('../controllers/requestAccess');
 const path = process.cwd();
 
 module.exports = (app, passport) => {
@@ -12,7 +13,7 @@ module.exports = (app, passport) => {
 		} else {
 			res.status('401').send('Unauthorized');
 		}
-	}
+	};
 
 	app.route('/')
 		.get((req, res) => {
