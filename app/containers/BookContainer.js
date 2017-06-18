@@ -18,6 +18,7 @@ class BookContainer extends React.Component {
     };
 
     this.startRequest = this.startRequest.bind(this);
+    this.submitRequest = this.submitRequest.bind(this);
   };  
 
   getBook(id) {
@@ -52,6 +53,10 @@ class BookContainer extends React.Component {
       });
   };
 
+  submitRequest() {
+    alert("HI");
+  };
+
   componentDidMount() {
     this.getBook(this.state.book.id);
   };
@@ -65,7 +70,8 @@ class BookContainer extends React.Component {
     //if successful call <book> else "book not found"    
     const tradeableBooks = [];
     this.state.myAvailableBooks.map(b => {
-      tradeableBooks.push(        
+      b.submitHandler = this.submitRequest;
+      tradeableBooks.push(
         <TradeableBook key={b.id} {...b} />
       )
     });
@@ -100,7 +106,7 @@ function Book(props) {
 function TradeableBook(props) {
   return (
     <div>
-      {props.title}
+      {props.title} <button onClick={props.submitHandler} >Offer This Book</button>
     </div>
   )
 };
