@@ -11,6 +11,7 @@ import {
 import Books from '../containers/BooksContainer.js';
 import Book from '../containers/BookContainer.js';
 import Profile from '../containers/ProfileContainer.js';
+import Request from '../containers/RequestContainer.js';
 
 //React-Router 4.0
 
@@ -26,6 +27,7 @@ const AuthExample = () => (
       <Route path="/books/:id" component={Book}/>
       <Route path="/login" component={Login}/>
       <PrivateRoute path="/profile" component={Profile}/>
+      <PrivateRoute path="/request" component={Request}/>
     </div>
   </Router>
 );

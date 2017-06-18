@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import {Link, Route} from 'react-router-dom';
 import bookHelper from '../helpers/bookHelpers';
 
 class BookContainer extends React.Component {
@@ -9,19 +10,42 @@ class BookContainer extends React.Component {
     this.state = {
       book: {
         id: props.match.params.id
-      }
+      },
+      myAvailableBooks:[]
     };
+
+    this.startRequest = this.startRequest.bind(this);
   };  
 
   getBook(id) {
     bookHelper.getBook(id)
-      .then(result => {
+      .then(result => {        
+        // const available = result.data.owner.requests.some(r => {
+        //   //compare Request model's book ID to the current book ID
+        // });
         const book = {
           id: result.data._id,
           title: result.data.title,
-          author: result.data.author
+          author: result.data.author,
+          isAvailable: true
         };
         this.setState({ book });
+      });
+  };
+
+  //Find all my books that aren't already in use.
+  startRequest() {
+    bookHelper.getMyBooks()
+      .then(result => {            
+        const books = [];
+        result.data.map(b => {
+          books.push({ 
+            title: b.title,
+            author: b.author,
+            id: b._id
+          });
+        });
+        this.setState({ myAvailableBooks: books });        
       });
   };
 
@@ -36,14 +60,39 @@ class BookContainer extends React.Component {
   
   render() {
     //if successful call <book> else "book not found"    
+    const tradeableBooks = [];
+    this.state.myAvailableBooks.map(b => {
+      tradeableBooks.push(        
+        <TradeBook key={b.id} {...b} />
+      )
+    });
     return (
-      <Book book={this.state.book} />
+      <div>
+        <Book book={this.state.book} clickHandler={this.startRequest} />
+        {tradeableBooks}
+      </div>
     )
   };
 };
 
 function Book(props) {
-  return <h1>{props.book.title} by {props.book.author}</h1>;
+  const availableCondition = props.book.isAvailable ? 
+    <button onClick={props.clickHandler} >Request Trade</button>
+    : "Book unavailable.";
+  return (
+    <div>
+      <h1>{props.book.title} by {props.book.author}</h1>
+      {availableCondition}
+    </div>
+  )
+};
+
+function TradeBook(props) {
+  return (
+    <div>
+      {props.title}
+    </div>
+  )
 };
 
 export default BookContainer;

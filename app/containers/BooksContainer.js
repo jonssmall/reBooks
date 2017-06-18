@@ -54,7 +54,7 @@ function BooksList(props) {
 function Book(props) {  
   return (
     <div>
-      <Link to={`/books/${props.id}`} ><em>{props.title}</em> by {props.author}</Link>      
+      <Link to={`/books/${props.id}`} ><em>{props.title}</em> by {props.author}</Link>
     </div>
   )
 };
