@@ -1,6 +1,7 @@
 'use strict';
 
 const Books = require('../models/books');
+const Requests = require('../models/requests');
 
 function addBook(req, res) {
   const newBook = new Books();  
@@ -27,6 +28,28 @@ function getMyBooks(req, res) {
     res.json(books);
   });
 };
+
+//Compare my books to my requests, filtering out overlapping IDs
+function getTradeableBooks(req, res) {  
+  Books.find({ owner: req.user._id }, (err, books) => {
+    if (err) throw err;
+
+    books.filter(b => {
+      const inUseQuery = {
+        $and : [
+          { $or : [ { firstBook : b._id }, { secondBook : b._id } ] },
+          { $and : [ { approved : true }, { completed: false } ] }
+        ]
+      };
+      Requests.findOne(inUseQuery, (err, request) => {
+        if (err) throw err;
+        return !(Boolean(request));
+      });
+    })
+
+    res.json(books);
+  });
+}
 
 function getBook(req, res) {
   if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
@@ -67,6 +90,7 @@ module.exports = {
   addBook: addBook,
   getBooks: getBooks,
   getMyBooks: getMyBooks,
+  getTradeableBooks: getTradeableBooks,
   getBook: getBook,
   deleteBook: deleteBook
 };

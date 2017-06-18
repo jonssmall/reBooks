@@ -62,6 +62,9 @@ module.exports = (app, passport) => {
 	app.route('/user/books')
 		.get(isLoggedIn, bookApi.getMyBooks);
 
+	app.route('/user/tbooks')
+		.get(isLoggedIn, bookApi.getTradeableBooks);
+
 	app.route('/books')
 		.get(bookApi.getBooks)
 		.post(isLoggedIn, bookApi.addBook);

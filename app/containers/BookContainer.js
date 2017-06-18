@@ -35,7 +35,7 @@ class BookContainer extends React.Component {
 
   //Find all my books that aren't already in use.
   startRequest() {
-    bookHelper.getMyBooks()
+    bookHelper.getTradeableBooks()
       .then(result => {            
         const books = [];
         result.data.map(b => {
@@ -63,7 +63,7 @@ class BookContainer extends React.Component {
     const tradeableBooks = [];
     this.state.myAvailableBooks.map(b => {
       tradeableBooks.push(        
-        <TradeBook key={b.id} {...b} />
+        <TradeableBook key={b.id} {...b} />
       )
     });
     return (
@@ -87,7 +87,7 @@ function Book(props) {
   )
 };
 
-function TradeBook(props) {
+function TradeableBook(props) {
   return (
     <div>
       {props.title}
