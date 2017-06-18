@@ -45,16 +45,6 @@ const bookHelper = {
       });
   },
 
-  getTradeableBooks() {
-    return axios.get('/user/tbooks')
-      .then(res => {
-        return res
-      })
-      .catch(err => {        
-        return err;
-      });
-  },
-
   deleteBook(id) {    
     return axios.delete(`/books/${id}`)
       .then(res => {

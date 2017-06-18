@@ -9,7 +9,10 @@ class BookContainer extends React.Component {
     super(props);
     this.state = {
       book: {
-        id: props.match.params.id
+        id: props.match.params.id,
+        owner: { //placeholder because render is called before ajax
+          _id: null
+        } 
       },
       myAvailableBooks:[]
     };
@@ -19,33 +22,33 @@ class BookContainer extends React.Component {
 
   getBook(id) {
     bookHelper.getBook(id)
-      .then(result => {        
-        // const available = result.data.owner.requests.some(r => {
-        //   //compare Request model's book ID to the current book ID
-        // });
+      .then(result => {                
         const book = {
           id: result.data._id,
           title: result.data.title,
           author: result.data.author,
-          isAvailable: true
+          owner: result.data.owner,
+          isAvailable: !(result.data.trade && result.data.trade.approved) //trades that are only proposed don't block other proposals.
         };
         this.setState({ book });
       });
   };
 
-  //Find all my books that aren't already in use.
+  //Find all my books that aren't already in any trade state (proposed or approved)  
   startRequest() {
-    bookHelper.getTradeableBooks()
-      .then(result => {            
-        const books = [];
-        result.data.map(b => {
-          books.push({ 
-            title: b.title,
-            author: b.author,
-            id: b._id
+    bookHelper.getMyBooks()
+      .then(result => {
+        if(result.data) {
+          const books = [];
+          result.data.map(b => {
+            if (!b.trade) books.push({ 
+              title: b.title,
+              author: b.author,
+              id: b._id
+            });
           });
-        });
-        this.setState({ myAvailableBooks: books });        
+          this.setState({ myAvailableBooks: books });
+        }
       });
   };
 
@@ -76,9 +79,16 @@ class BookContainer extends React.Component {
 };
 
 function Book(props) {
-  const availableCondition = props.book.isAvailable ? 
-    <button onClick={props.clickHandler} >Request Trade</button>
-    : "Book unavailable.";
+  let availableCondition;        
+  if(!window.USER) {
+    availableCondition = "Login to request trades.";
+  } else if (props.book.owner._id == window.USER._id) {
+    availableCondition = "This is your book.";
+  } else if(props.book.isAvailable) {
+    availableCondition = <button onClick={props.clickHandler} >Request Trade</button>;
+  } else {
+    availableCondition = "Book unavailable.";
+  }  
   return (
     <div>
       <h1>{props.book.title} by {props.book.author}</h1>

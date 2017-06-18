@@ -2,7 +2,6 @@
 
 const userApi = require('../controllers/userAccess');
 const bookApi = require('../controllers/bookAccess');
-const requestApi = require('../controllers/requestAccess');
 const path = process.cwd();
 
 module.exports = (app, passport) => {
@@ -61,9 +60,6 @@ module.exports = (app, passport) => {
 
 	app.route('/user/books')
 		.get(isLoggedIn, bookApi.getMyBooks);
-
-	app.route('/user/tbooks')
-		.get(isLoggedIn, bookApi.getTradeableBooks);
 
 	app.route('/books')
 		.get(bookApi.getBooks)
