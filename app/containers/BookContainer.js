@@ -3,6 +3,7 @@
 import React from 'react';
 import {Link, Route} from 'react-router-dom';
 import bookHelper from '../helpers/bookHelpers';
+import requestHelper from '../helpers/requestHelpers';
 
 class BookContainer extends React.Component {
   constructor(props) {
@@ -17,7 +18,7 @@ class BookContainer extends React.Component {
       myAvailableBooks:[]
     };
 
-    this.startRequest = this.startRequest.bind(this);
+    this.getOfferBooks = this.getOfferBooks.bind(this);
     this.submitRequest = this.submitRequest.bind(this);
   };  
 
@@ -36,7 +37,7 @@ class BookContainer extends React.Component {
   };
 
   //Find all my books that aren't already in any trade state (proposed or approved)  
-  startRequest() {
+  getOfferBooks() {
     bookHelper.getMyBooks()
       .then(result => {
         if(result.data) {
@@ -53,8 +54,11 @@ class BookContainer extends React.Component {
       });
   };
 
-  submitRequest() {
-    alert("HI");
+  submitRequest(offerId) { //save offered book's 'trade' nested property with ID of requested book
+    requestHelper.submitRequest(this.state.book.id, offerId)
+      .then(result => {
+        console.log(result);
+      });
   };
 
   componentDidMount() {
@@ -77,7 +81,7 @@ class BookContainer extends React.Component {
     });
     return (
       <div>
-        <Book book={this.state.book} clickHandler={this.startRequest} />
+        <Book book={this.state.book} clickHandler={this.getOfferBooks} />
         {tradeableBooks}
       </div>
     )
@@ -106,7 +110,7 @@ function Book(props) {
 function TradeableBook(props) {
   return (
     <div>
-      {props.title} <button onClick={props.submitHandler} >Offer This Book</button>
+      {props.title} <button onClick={props.submitHandler.bind(this, props.id)} >Offer This Book</button>
     </div>
   )
 };

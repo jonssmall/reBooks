@@ -57,9 +57,9 @@ function deleteBook(req, res) {
 }
 
 module.exports = {
-  addBook: addBook,
-  getBooks: getBooks,
-  getMyBooks: getMyBooks,  
-  getBook: getBook,
-  deleteBook: deleteBook
+  addBook,
+  getBooks,
+  getMyBooks,  
+  getBook,
+  deleteBook  
 };

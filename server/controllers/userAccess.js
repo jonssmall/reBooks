@@ -17,5 +17,5 @@ function updateLocation (req, res) {
 };
 
 module.exports = {
-  updateLocation: updateLocation
+  updateLocation
 };
