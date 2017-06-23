@@ -71,7 +71,17 @@ module.exports = (app, passport) => {
 		.get(bookApi.getBook)
 		.delete(isLoggedIn, bookApi.deleteBook);
 
+	app.route('/requests/mine')
+		.get(isLoggedIn, requestApi.getMyRequests);
+
+	app.route('/requests/formine')
+		.get(isLoggedIn, requestApi.getOffersForMine);
+
 	app.route('/requests')
 		.post(isLoggedIn, requestApi.addRequest);
+
+	app.route('/requests/:id')
+		.delete(isLoggedIn, requestApi.denyRequest)
+		.put(isLoggedIn, requestApi.approveRequest);
 
 };

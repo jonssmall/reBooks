@@ -3,6 +3,7 @@
 import React from 'react';
 import Profile from '../components/Profile';
 import MyBooksContainer from './MyBooksContainer';
+import RequestContainer from './RequestContainer';
 import updateUser from '../helpers/userHelpers';
 
 class ProfileContainer extends React.Component {
@@ -34,6 +35,7 @@ class ProfileContainer extends React.Component {
       <div>
         <Profile user={this.state.user} onUpdate={this.handleUpdate} onSubmit={this.handleSubmit} />        
         <MyBooksContainer />
+        <RequestContainer />
       </div>
     )
   };
