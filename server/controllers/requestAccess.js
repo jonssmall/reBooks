@@ -2,6 +2,7 @@
 
 const Books = require('../models/books');
 
+//My books in which I requested a trade (approved or not)
 function getMyRequests(req, res) {  
   const query = { $and: [ { owner: req.user._id }, { trade: { $ne: null } } ] };
   Books.find(query)
@@ -10,12 +11,19 @@ function getMyRequests(req, res) {
     if (err) throw err;
     res.json(books);
   });
-
 };
 
+//Everyones books that have trade ID's for books belonging to me
 function getOffersForMine(req, res) {
-  console.log(req);
-  res.send("OK");
+  const query= { owner: { $ne: req.user._id } }
+  Books.find(query)
+  .populate('trade.book')
+  .exec((err, books) => {
+    if (err) throw err;    
+    res.json(books.filter(b => {
+      return b.trade.book && String(b.trade.book.owner) == String(req.user._id);
+    }));    
+  });
 };
 
 function addRequest(req, res) {
