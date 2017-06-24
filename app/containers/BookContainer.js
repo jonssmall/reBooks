@@ -48,7 +48,7 @@ class BookContainer extends React.Component {
               author: b.author,
               id: b._id
             });
-          });
+          });          
           this.setState({ myAvailableBooks: books });
         }
       });
@@ -57,7 +57,13 @@ class BookContainer extends React.Component {
   submitRequest(offerId) { //save offered book's 'trade' nested property with ID of requested book
     requestHelper.submitRequest(this.state.book.id, offerId)
       .then(result => {
-        console.log(result);
+        console.log(result);  
+        if(result.status == 200) {
+          const myAvailableBooks = this.state.myAvailableBooks.filter(b => {
+            return b.id != offerId;
+          });          
+          this.setState({ myAvailableBooks });
+        }
       });
   };
 
@@ -67,11 +73,11 @@ class BookContainer extends React.Component {
   
   //Reloading component after one lateral move from one book to the other. Is there another way?
   componentWillReceiveProps(newProps) {
+    this.setState({ myAvailableBooks: [] });
     this.getBook(newProps.match.params.id);
   };
   
   render() {
-    //if successful call <book> else "book not found"    
     const tradeableBooks = [];
     this.state.myAvailableBooks.map(b => {
       b.submitHandler = this.submitRequest;

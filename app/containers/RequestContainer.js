@@ -9,7 +9,8 @@ class RequestContainer extends React.Component {
 
     this.state = {
       requests: [],
-      offers: []
+      offers: [],
+      history: this.props.history
     };    
     this.approveOffer = this.approveOffer.bind(this);
     this.denyOffer = this.denyOffer.bind(this);
@@ -32,28 +33,46 @@ class RequestContainer extends React.Component {
   approveOffer(offerId) {
     requestHelper.approveRequest(offerId)
       .then(result => {
-        console.log(result);
+        if (result.status == 200) {
+          const offers = this.state.offers.filter(o => o._id != offerId);
+          this.setState({ offers });
+          requestHelper.getRequests()
+            .then(result => {        
+              this.setState({ requests: result.data });
+            });
+        }        
       });
   };
 
   denyOffer(offerId) {
     requestHelper.denyRequest(offerId)
-      .then(result => {
-        console.log(result);
+      .then(result => {        
+        if (result.status == 200) {          
+          const offers = this.state.offers.filter(o => o._id != offerId);
+          this.setState({ offers });          
+        }
       });
   };
 
   completeTrade(requestId) {
     requestHelper.completeRequest(requestId)
-      .then(result => {
-        console.log(result);
+      .then(result => {        
+        if (result.status == 200) {
+          const requests = this.state.requests.filter(r => r._id != requestId);
+          const history = result.data.requestHistory;
+          this.setState({ requests, history });
+        }
       });
   };
 
   cancelRequest(requestId) {
     requestHelper.denyRequest(requestId)
       .then(result => {
-        console.log(result);
+        if (result.status == 200) {                    
+          const requests = this.state.requests.filter(r => r._id != requestId);
+          const history = result.data.requestHistory;
+          this.setState({ requests, history });      
+        }
       });
   };
 
@@ -63,7 +82,7 @@ class RequestContainer extends React.Component {
         <h1>Requests:</h1>
         <Requests requests={this.state.requests} completeHandler={this.completeTrade} cancelHandler={this.cancelRequest} />
         <Offers offers={this.state.offers} approveHandler={this.approveOffer} denyHandler={this.denyOffer} />
-        <History history={this.props.history} />
+        <History history={this.state.history} />
       </div>
     )
   };
@@ -107,7 +126,7 @@ function Offers(props) {
   )
 };
 
-function History(props) {
+function History(props) {  
   const list = [];
   props.history.map(h => {
     list.push(

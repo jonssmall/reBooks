@@ -52,9 +52,9 @@ function denyRequest(req, res) {
     book.save((err, book) => {
       if (err) throw err;
       const addReceipt = { $push: { requestHistory: receipt } };
-      Users.findByIdAndUpdate(book.owner, addReceipt, (err, user) => {
-        if (err) throw err;
-        res.json(book);
+      Users.findByIdAndUpdate(book.owner, addReceipt, {new: true}, (err, user) => {
+        if (err) throw err;        
+        res.json(user);
       });
     });  
   });
@@ -83,7 +83,7 @@ function completeRequest(req, res) {
     book.save((err, book) => {
       if (err) throw err;
       const addReceipt = { $push: { requestHistory: receipt } };
-      Users.findByIdAndUpdate(book.owner, addReceipt, (err, user) => {
+      Users.findByIdAndUpdate(book.owner, addReceipt, {new: true}, (err, user) => {
         if (err) throw err;
         Books.findByIdAndUpdate(otherBookId, { trade: null }, (err, otherBook) => {
           if (err) throw err;
