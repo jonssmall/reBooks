@@ -30,12 +30,12 @@ class ProfileContainer extends React.Component {
       });
   };
 
-  render() {       
+  render() {     
     return (
       <div>
         <Profile user={this.state.user} onUpdate={this.handleUpdate} onSubmit={this.handleSubmit} />        
         <MyBooksContainer />
-        <RequestContainer />
+        <RequestContainer history={this.state.user.requestHistory} />
       </div>
     )
   };

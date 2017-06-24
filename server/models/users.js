@@ -14,7 +14,11 @@ const User = new Schema({
 	city: String,
 	state: String,
 	books : [{ type: Schema.Types.ObjectId, ref: 'Book' }],
-	requests : [{ type: Schema.Types.ObjectId, ref: 'Request' }]
+	requestHistory: [{ 
+		myBook: String, 
+		otherBook: String, 
+		outcome: String 
+	}]	
 });
 
 module.exports = mongoose.model('User', User);

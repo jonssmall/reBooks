@@ -41,7 +41,7 @@ const requestHelper = {
 
   //takes in the ID of the book offered for mine
   approveRequest(offerId) {
-    axios.put(`/requests/${offerId}`)
+    return axios.put(`/requests/${offerId}`)
     .then(res => {
       return res;
     })
@@ -49,17 +49,36 @@ const requestHelper = {
       return err
     });
   },
-
-  //can this also be used to cancel requests you made?
+  
   denyRequest(offerId) {
-    axios.delete(`/requests/${offerId}`)
-    .then(res => {
+    return axios.delete(`/requests/${offerId}`)
+    .then(res => {      
+      return res;
+    })
+    .catch(err => {
+      return err
+    });
+  },
+
+  completeRequest(requestId) {
+    return axios.post(`/requests/${requestId}`)
+    .then(res => {      
       return res;
     })
     .catch(err => {
       return err
     });
   }
+
+  // cancelRequest(requestId) {
+  //   return axios.delete(`/requests/${requestId}`)
+  //   .then(res => {      
+  //     return res;
+  //   })
+  //   .catch(err => {
+  //     return err
+  //   });
+  // }
 
 };
 

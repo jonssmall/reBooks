@@ -1,6 +1,7 @@
 'use strict';
 
 const Books = require('../models/books');
+const Users = require('../models/users');
 
 //My books in which I requested a trade (approved or not)
 function getMyRequests(req, res) {  
@@ -34,15 +35,73 @@ function addRequest(req, res) {
   });
 };
 
+// set offered book's trade property to null.
+// stuff receipt into User model.
 function denyRequest(req, res) {
-  console.log(req);
-  res.send("OK");
+  const update = { trade : null };
+  Books.findById(req.params.id)
+  .populate('trade.book')
+  .exec((err, book) => {
+    if (err) throw err;
+    const receipt = {
+      myBook: book.title, 
+		  otherBook: book.trade.book.title, 
+		  outcome: "Rejected"
+    };
+    book.trade = null;        
+    book.save((err, book) => {
+      if (err) throw err;
+      const addReceipt = { $push: { requestHistory: receipt } };
+      Users.findByIdAndUpdate(book.owner, addReceipt, (err, user) => {
+        if (err) throw err;
+        res.json(book);
+      });
+    });  
+  });
+};
+
+// Set 2 books trade properties to null,
+// push receipt into each owner's requestHistory 
+function completeRequest(req, res) {
+  Books.findById(req.params.id)
+  .populate('trade.book')
+  .exec((err, book) => {
+    if (err) throw err;
+    const receipt = {
+      myBook: book.title, 
+		  otherBook: book.trade.book.title, 
+		  outcome: "Completed"
+    };
+    const otherBookId = book.trade.book._id;
+    const otherUserId = book.trade.book.owner;
+    const otherReceipt = {
+      myBook: book.trade.book.title, 
+		  otherBook: book.title, 
+		  outcome: "Completed"
+    }
+    book.trade = null;        
+    book.save((err, book) => {
+      if (err) throw err;
+      const addReceipt = { $push: { requestHistory: receipt } };
+      Users.findByIdAndUpdate(book.owner, addReceipt, (err, user) => {
+        if (err) throw err;
+        Books.findByIdAndUpdate(otherBookId, { trade: null }, (err, otherBook) => {
+          if (err) throw err;
+          const addOtherReceipt = { $push: { requestHistory: otherReceipt } };
+          Users.findByIdAndUpdate(otherUserId, addOtherReceipt, (err, otherUser) => {
+            if (err) throw err;
+            res.json(user);
+          }); //The pyramid of death. Better option than callback hell for mongo?
+        });
+      });
+    });  
+  });
 };
 
 //  update offered book's trade property and
 //    include reciprocation for requested book
 function approveRequest(req, res) {
-  const update = { 'trade.approved' : true } ;
+  const update = { 'trade.approved' : true };
   Books.findByIdAndUpdate(req.params.id, update, (err, book) => {
     if (err) throw err;
     const reciprocal = { trade: { approved: true, book: book._id } };
@@ -58,5 +117,6 @@ module.exports = {
   getOffersForMine,
   addRequest,
   denyRequest,
-  approveRequest
+  approveRequest,
+  completeRequest
 };

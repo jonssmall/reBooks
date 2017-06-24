@@ -82,6 +82,7 @@ module.exports = (app, passport) => {
 
 	app.route('/requests/:id')
 		.delete(isLoggedIn, requestApi.denyRequest)
-		.put(isLoggedIn, requestApi.approveRequest);
+		.put(isLoggedIn, requestApi.approveRequest)
+		.post(isLoggedIn, requestApi.completeRequest);
 
 };
