@@ -98,16 +98,22 @@ function completeRequest(req, res) {
   });
 };
 
-//  update offered book's trade property and
-//    include reciprocation for requested book
+//  update offered book's trade property,
+//    include reciprocation for requested book,
+//    and destroy all other offers for said book.
 function approveRequest(req, res) {
   const update = { 'trade.approved' : true };
   Books.findByIdAndUpdate(req.params.id, update, (err, book) => {
     if (err) throw err;
     const reciprocal = { trade: { approved: true, book: book._id } };
     Books.findByIdAndUpdate(book.trade.book, reciprocal, (err, secondBook) => {
-      if (err) throw err;
-      res.json(secondBook);
+      if (err) throw err;            
+      const otherPendingQuery = { $and: [ {'trade.book' : secondBook._id }, { 'trade.approved' : false } ] };
+      const clearTrade = { trade : null };            
+      Books.update(otherPendingQuery, clearTrade, {multi: true}, (err, raw) => {      
+        if (err) throw err;        
+        res.json(secondBook);
+      });
     });    
   });  
 };

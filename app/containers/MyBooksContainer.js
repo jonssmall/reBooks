@@ -23,10 +23,11 @@ class MyBooksContainer extends React.Component {
     bookHelper.getMyBooks()
       .then(result => {            
         const books = [];
-        result.data.map(b => {
+        result.data.map(b => {          
           books.push({ 
             title: b.title,
             author: b.author,
+            trade: b.trade,
             id: b._id
           });
         });
@@ -106,11 +107,13 @@ function NewBook(props) {
 
 function MyBooks(props) {
   const books = [];  
-  props.books.map(b => {
+  props.books.map(b => {    
+    const deleteButton = <button onClick={props.onDelete.bind(this, b.id)}>Delete</button>;
+    const disabledButton = <button disabled={true} >In Use</button>;
     const book = (
       <div key={b.id}>
         <em>{b.title}</em> by {b.author}
-        <button onClick={props.onDelete.bind(this, b.id)}>Delete</button>
+        {b.trade ? disabledButton : deleteButton }
       </div>
     );    
     books.push(book);

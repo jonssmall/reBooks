@@ -29,6 +29,7 @@ class RequestContainer extends React.Component {
         this.setState({ offers: result.data });
       });
   };
+  
 
   approveOffer(offerId) {
     requestHelper.approveRequest(offerId)
@@ -39,6 +40,10 @@ class RequestContainer extends React.Component {
           requestHelper.getRequests()
             .then(result => {        
               this.setState({ requests: result.data });
+            });
+          requestHelper.getOffers()
+            .then(result => {        
+              this.setState({ offers: result.data });
             });
         }        
       });
