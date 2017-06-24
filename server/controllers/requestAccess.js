@@ -21,7 +21,7 @@ function getOffersForMine(req, res) {
   .exec((err, books) => {
     if (err) throw err;    
     res.json(books.filter(b => {
-      return b.trade.book && String(b.trade.book.owner) == String(req.user._id);
+      return !b.trade.approved && b.trade.book && String(b.trade.book.owner) == String(req.user._id);
     }));    
   });
 };
@@ -39,9 +39,18 @@ function denyRequest(req, res) {
   res.send("OK");
 };
 
+//  update offered book's trade property and
+//    include reciprocation for requested book
 function approveRequest(req, res) {
-  console.log(req);
-  res.send("OK");
+  const update = { 'trade.approved' : true } ;
+  Books.findByIdAndUpdate(req.params.id, update, (err, book) => {
+    if (err) throw err;
+    const reciprocal = { trade: { approved: true, book: book._id } };
+    Books.findByIdAndUpdate(book.trade.book, reciprocal, (err, secondBook) => {
+      if (err) throw err;
+      res.json(secondBook);
+    });    
+  });  
 };
 
 module.exports = {

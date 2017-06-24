@@ -10,8 +10,9 @@ class RequestContainer extends React.Component {
     this.state = {
       requests: [],
       offers: []
-    };
-    //this.handleSubmit = this.handleSubmit.bind(this);
+    };    
+    this.approveOffer = this.approveOffer.bind(this);
+    this.denyOffer = this.denyOffer.bind(this);
   };
 
   componentDidMount() {
@@ -26,12 +27,23 @@ class RequestContainer extends React.Component {
       });
   };
 
+  approveOffer(offerId) {
+    requestHelper.approveRequest(offerId)
+      .then(result => {
+        console.log(result);
+      });
+  };
+
+  denyOffer(offer) {
+
+  };
+
   render() {       
     return (
       <div>
         <h1>Requests:</h1>
         <Requests requests={this.state.requests} />
-        <Offers offers={this.state.offers} />
+        <Offers offers={this.state.offers} approveHandler={this.approveOffer} denyHandler={this.denyOffer} />
       </div>
     )
   };
@@ -42,7 +54,7 @@ function Requests(props) {
   props.requests.map(r => {
     list.push(
       <div key={r._id} >
-        My <em>{r.title}</em> for <em>{r.trade.book.title}</em>.
+        My <em>{r.title}</em> for <em>{r.trade.book.title}</em>. (Status: {r.trade.approved ? 'Approved' : 'Pending'})
       </div>
     );
   });
@@ -60,6 +72,8 @@ function Offers(props) {
     list.push(
       <div key={o._id} >
         <em>{o.title}</em> for my <em>{o.trade.book.title}</em>.
+        <button onClick={props.approveHandler.bind(this, o._id)} >Approve</button>
+        <button onClick={props.denyHandler.bind(this, o)} >Deny</button>
       </div>
     );
   });

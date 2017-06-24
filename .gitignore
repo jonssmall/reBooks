@@ -4,3 +4,4 @@ dist/
 .env
 app/index.js
 npm-debug.log
+wishlist.txt

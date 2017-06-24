@@ -39,9 +39,9 @@ const requestHelper = {
     });
   },
 
-  //can this also be used to cancel requests you made?
-  denyRequest(requestId) {
-    axios.delete(`/requests/${requestId}`)
+  //takes in the ID of the book offered for mine
+  approveRequest(offerId) {
+    axios.put(`/requests/${offerId}`)
     .then(res => {
       return res;
     })
@@ -50,8 +50,9 @@ const requestHelper = {
     });
   },
 
-  approveRequest(requestId) {
-    axios.put(`/requests/${requestId}`)
+  //can this also be used to cancel requests you made?
+  denyRequest(offerId) {
+    axios.delete(`/requests/${offerId}`)
     .then(res => {
       return res;
     })
