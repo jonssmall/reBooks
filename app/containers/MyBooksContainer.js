@@ -106,22 +106,45 @@ function NewBook(props) {
 };
 
 function MyBooks(props) {
-  const books = [];  
-  props.books.map(b => {    
-    const deleteButton = <button onClick={props.onDelete.bind(this, b.id)}>Delete</button>;
-    const disabledButton = <button disabled={true} >In Use</button>;
-    const book = (
-      <div key={b.id}>
-        <em>{b.title}</em> by {b.author}
-        {b.trade ? disabledButton : deleteButton }
-      </div>
-    );    
-    books.push(book);
+  const list = [];
+  let count = 1;
+  props.books.map(b => {
+    const buttonAttrs = {
+      className:"pure-button pure-button-primary",
+      disabled: Boolean(b.trade),
+      onClick: props.onDelete.bind(this, b.id)
+    };
+    const deleteButton = <button {...buttonAttrs} >Delete</button>;    
+    const status = b.trade ? 'In use' : 'Available';    
+    // b.trade ?
+    list.push(      
+      <tr key={b.id} className={count % 2 == 1 ? "pure-table-odd" : ""} >
+        <td>{count}</td>    
+        <td>{b.title}</td>
+        <td>{b.author}</td>
+        <td>{status}</td>
+        <td>{deleteButton}</td>                  
+      </tr>
+    );
+    count++;    
   });
   return (    
     <div>
-      <h1>My Books:</h1>
-      {books}
+      <h1>My Books:</h1>      
+      <table className="pure-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Book</th>
+            <th>Author</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {list}
+        </tbody>
+      </table>
     </div>
   )
 };

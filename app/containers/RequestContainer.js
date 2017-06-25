@@ -118,11 +118,13 @@ function Requests(props) {
       <h3>Trade requests I have made for others' books:</h3>
       <table className="pure-table">
         <thead>
-          <th>#</th>
-          <th>My Book</th>
-          <th>Request</th>
-          <th>Status</th>
-          <th>Actions</th>
+          <tr>
+            <th>#</th>
+            <th>My Book</th>
+            <th>Request</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>          
         </thead>
         <tbody>
           {list}
@@ -154,10 +156,12 @@ function Offers(props) {
       <h3>Offers others have made for my books:</h3>      
       <table className="pure-table">
         <thead>
-          <th>#</th>
-          <th>Offer</th>
-          <th>My Book</th>
-          <th>Actions</th>
+          <tr>
+            <th>#</th>
+            <th>Offer</th>
+            <th>My Book</th>
+            <th>Actions</th>
+          </tr>
         </thead>
         <tbody>
           {list}
@@ -186,10 +190,12 @@ function History(props) {
       <h3>History of trades:</h3>      
       <table className="pure-table">
         <thead>
-          <th>#</th>
-          <th>My Book</th>
-          <th>Request</th>
-          <th>Outcome</th>
+          <tr>
+            <th>#</th>
+            <th>My Book</th>
+            <th>Request</th>
+            <th>Outcome</th>
+          </tr>
         </thead>
         <tbody>
           {list}
