@@ -133,17 +133,33 @@ function Offers(props) {
 
 function History(props) {  
   const list = [];
+  let count= 1;
   props.history.map(h => {
     list.push(
-      <div key={h._id} >
-        My <em>{h.myBook}</em> for <em>{h.otherBook}</em> - Outcome: {h.outcome}        
-      </div>
+      <tr key={h._id} className={count % 2 == 1 ? "pure-table-odd" : ""} >
+        <td>{count}</td>    
+        <td>{h.myBook}</td>
+        <td>{h.otherBook}</td>
+        <td>{h.outcome}</td>
+      </tr>
     );
+    count++;
   });
   return (
     <div>
-      <h3>History of trades:</h3>
-      {list}
+      <h3>History of trades:</h3>      
+      <table className="pure-table">
+        <thead>
+          <th>#</th>
+          <th>My Book</th>
+          <th>Request</th>
+          <th>Outcome</th>
+        </thead>
+        <tbody>
+          {list}
+        </tbody>
+      </table>
+
     </div>
   )
 };
