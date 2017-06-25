@@ -24,7 +24,8 @@ module.exports = (app, passport) => {
     		<title>reBooks</title>
     		<meta charset="UTF-8">	
     		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-				<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" />           
+				<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" />
+				<link rel="stylesheet" href="/app/style/side-menu.css">
 			</head>
 			<body>
     		<div id="app"></div>
@@ -32,6 +33,7 @@ module.exports = (app, passport) => {
 					window.USER = ${JSON.stringify(req.user)};					
 				</script>
     		<script type="text/javascript" src="/app/index.js" charset="utf-8"></script>
+				<script type="text/javascript" src="/app//style/sidebar.js" charset="utf-8"></script>
 			</body>
 			</html>
 			`;

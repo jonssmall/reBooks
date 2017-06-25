@@ -14,18 +14,41 @@ import Profile from '../containers/ProfileContainer.js';
 
 //React-Router 4.0
 
-const AuthExample = () => (
-  <Router>
-    <div>
-      <AuthButton/>
-      <ul>
-        <li><Link to="/books">Books Page</Link></li>
-        <li><Link to="/profile">Profile Page</Link></li>
-      </ul>
-      <Route path="/books" component={Books}/>
-      <Route path="/books/:id" component={Book}/>
-      <Route path="/login" component={Login}/>
-      <PrivateRoute path="/profile" component={Profile}/>      
+const AuthRouter = () => (  
+  <Router>    
+    <div id="layout">
+      <a href="#menu" id="menuLink" className="menu-link">
+        <span></span>
+      </a>
+      <div id="menu">
+        <div className="pure-menu">
+          <a className="pure-menu-heading" href="#">reBook</a>
+          <ul className="pure-menu-list">            
+            <li className="pure-menu-item">
+              <Link to="/books" className="pure-menu-link">Books</Link>
+            </li>
+            <li className="pure-menu-item">
+              <Link to="/profile" className="pure-menu-link">Profile</Link>
+            </li>            
+            <li className="pure-menu-item">
+              {AuthButton}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="main">
+        <div className="header">
+          <h1>reBook</h1>
+          <h2>Request and respond to offers for book trades.</h2>
+        </div>
+        <div className="content">
+          <Route path="/books" component={Books}/>
+          <Route path="/books/:id" component={Book}/>
+          <Route path="/login" component={Login}/>
+          <PrivateRoute path="/profile" component={Profile}/>
+        </div>
+      </div>
     </div>
   </Router>
 );
@@ -34,16 +57,8 @@ const auth = {
   isAuthenticated: window.USER ? true : false,
 };
 
-const AuthButton = withRouter(({ history }) => (
-  auth.isAuthenticated ? (
-    <p>
-      Welcome! 
-      <a href="/logout"><button>Sign out</button></a>
-    </p>
-  ) : (
-    <p>You are not logged in.</p>
-  )
-));
+const AuthButton = auth.isAuthenticated ? <a href="/logout" className="pure-menu-link">Logout</a> : 
+                                          <a href="/auth/github" className="pure-menu-link">Login (Github)</a>;
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
@@ -71,4 +86,4 @@ class Login extends React.Component {
   }
 };
 
-export default AuthExample;
+export default AuthRouter;

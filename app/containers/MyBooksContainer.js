@@ -80,28 +80,28 @@ class MyBooksContainer extends React.Component {
 
   render() {       
     return (
-      <div>        
-        <NewBook newBook={this.state.newBook} onUpdate={this.handleUpdate} onSubmit={this.handleSubmit} />        
+      <div>
+        <h1>My Books:</h1>                  
         <MyBooks books={this.state.myBooks} onDelete={this.handleDelete} />
+        <br/>
+        <NewBook newBook={this.state.newBook} onUpdate={this.handleUpdate} onSubmit={this.handleSubmit} />
       </div>
     )
   };
 };
 
-function NewBook(props) {  
-  return (
-    <div>      
-      <h1>New Book:</h1>
-      <label>
-        Title:
-        <input type="text" name="title" value={props.newBook.title} onChange={props.onUpdate} />
-      </label>
-      <label>
-        Author:
-        <input type="text" name="author" value={props.newBook.author} onChange={props.onUpdate} />
-      </label>      
-      <button onClick={props.onSubmit}>Create Book</button>      
-    </div>
+function NewBook(props) {
+  const buttonAttrs = {
+    disabled: !(props.newBook.title && props.newBook.author),
+    className: "pure-button pure-button-primary",
+    onClick: props.onSubmit
+  };
+  return (    
+    <form className="pure-form">
+      <input type="text" placeholder="Title" name="title" value={props.newBook.title} onChange={props.onUpdate} />
+      <input type="text" placeholder="Author" name="author" value={props.newBook.author} onChange={props.onUpdate} />
+      <button {...buttonAttrs}>New Book</button>      
+    </form>
   )
 };
 
@@ -110,7 +110,7 @@ function MyBooks(props) {
   let count = 1;
   props.books.map(b => {
     const buttonAttrs = {
-      className:"pure-button pure-button-primary",
+      className:"pure-button",
       disabled: Boolean(b.trade),
       onClick: props.onDelete.bind(this, b.id)
     };
@@ -129,8 +129,7 @@ function MyBooks(props) {
     count++;    
   });
   return (    
-    <div>
-      <h1>My Books:</h1>      
+    <div>      
       <table className="pure-table">
         <thead>
           <tr>
