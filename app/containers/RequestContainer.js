@@ -94,39 +94,75 @@ class RequestContainer extends React.Component {
 };
 
 function Requests(props) {
-  const list = [];  
+  const list = [];
+  let count = 1;
   props.requests.map(r => {
-    const pending = <span>Pending <button onClick={props.cancelHandler.bind(this, r._id)} >Cancel</button></span>;
-    const approved = <span>Approved <button onClick={props.completeHandler.bind(this, r._id)} >Complete</button></span>;
-    list.push(
-      <div key={r._id} >
-        My <em>{r.title}</em> for <em>{r.trade.book.title}</em>. Status: {r.trade.approved ? approved : pending }
-      </div>
+    const pending = <button onClick={props.cancelHandler.bind(this, r._id)} >Cancel</button>
+    const approved = <button onClick={props.completeHandler.bind(this, r._id)} >Complete</button>
+    const status = r.trade.approved ? 'Approved' : 'Pending';
+    const action = r.trade.approved ? approved : pending;
+    //r.trade.approved
+    list.push(      
+      <tr key={r._id} className={count % 2 == 1 ? "pure-table-odd" : ""} >
+        <td>{count}</td>    
+        <td>{r.title}</td>
+        <td>{r.trade.book.title}</td>
+        <td>{status}</td>
+        <td>{action}</td>                  
+      </tr>
     );
+    count++;
   });
   return (
     <div>
       <h3>Trade requests I have made for others' books:</h3>
-      {list}
+      <table className="pure-table">
+        <thead>
+          <th>#</th>
+          <th>My Book</th>
+          <th>Request</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </thead>
+        <tbody>
+          {list}
+        </tbody>
+      </table>
     </div>
   )
 };
 
 function Offers(props) {
   const list = [];
+  let count = 1;    
   props.offers.map(o => {
-    list.push(
-      <div key={o._id} >
-        <em>{o.title}</em> for my <em>{o.trade.book.title}</em>.
-        <button onClick={props.approveHandler.bind(this, o._id)} >Approve</button>
-        <button onClick={props.denyHandler.bind(this, o._id)} >Deny</button>
-      </div>
+    list.push(      
+      <tr key={o._id} className={count % 2 == 1 ? "pure-table-odd" : ""} >
+        <td>{count}</td>    
+        <td>{o.title}</td>
+        <td>{o.trade.book.title}</td>
+        <td>
+          <button onClick={props.approveHandler.bind(this, o._id)} >Approve</button>&nbsp;
+          <button onClick={props.denyHandler.bind(this, o._id)} >Deny</button>
+        </td>
+      </tr>
     );
+    count++;
   });
   return (
     <div>
-      <h3>Offers others have made for my books:</h3>
-      {list}
+      <h3>Offers others have made for my books:</h3>      
+      <table className="pure-table">
+        <thead>
+          <th>#</th>
+          <th>Offer</th>
+          <th>My Book</th>
+          <th>Actions</th>
+        </thead>
+        <tbody>
+          {list}
+        </tbody>
+      </table>
     </div>
   )
 };
