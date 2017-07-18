@@ -4,6 +4,7 @@ import React from 'react';
 import {
   HashRouter as Router,
   Route,
+  Switch,
   Link,
   Redirect,
   withRouter
@@ -44,10 +45,10 @@ const AuthRouter = () => (
         </div>
         <div className="content">
           <Switch>
-            <Route path="/" component={Books}/>          
-            <Route path="/books/:id" component={Book}/>
-            <Route path="/login" component={Login}/>
             <PrivateRoute path="/profile" component={Profile}/>
+            <Route path="/books/:id" component={Book}/>                          
+            <Route path="/login" component={Login}/>
+            <Route path="/" component={Books}/>        
           </Switch>
         </div>
       </div>
