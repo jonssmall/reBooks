@@ -25,7 +25,7 @@ const AuthRouter = () => (
           <a className="pure-menu-heading" href="#">reBook</a>
           <ul className="pure-menu-list">            
             <li className="pure-menu-item">
-              <Link to="/books" className="pure-menu-link">Books</Link>
+              <Link to="/" className="pure-menu-link">Books</Link>
             </li>
             <li className="pure-menu-item">
               <Link to="/profile" className="pure-menu-link">Profile</Link>
@@ -43,8 +43,7 @@ const AuthRouter = () => (
           <h2>Request and respond to offers for book trades.</h2>
         </div>
         <div className="content">
-          <Route path="/" component={Books}/>
-          <Route path="/books" component={Books}/>
+          <Route path="/" component={Books}/>          
           <Route path="/books/:id" component={Book}/>
           <Route path="/login" component={Login}/>
           <PrivateRoute path="/profile" component={Profile}/>
