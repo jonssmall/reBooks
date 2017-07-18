@@ -43,6 +43,7 @@ const AuthRouter = () => (
           <h2>Request and respond to offers for book trades.</h2>
         </div>
         <div className="content">
+          <Route path="/" component={Books}/>
           <Route path="/books" component={Books}/>
           <Route path="/books/:id" component={Book}/>
           <Route path="/login" component={Login}/>
