@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import {Link, Route} from 'react-router-dom';
+import {Link, Switch, Route} from 'react-router-dom';
 import bookHelper from '../helpers/bookHelpers';
 import requestHelper from '../helpers/requestHelpers';
 
